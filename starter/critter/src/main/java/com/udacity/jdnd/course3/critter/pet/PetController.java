@@ -30,6 +30,7 @@ public class PetController {
       Customer customer = new Customer();
        customer.setId(petDTO.getOwnerId());
        petDTO.setCustomer(customer);
+
         Pet savedPet = petService.savePet(convertPetDTOToPetEntity(petDTO));
         return convertPetToPetDTO(savedPet);
     }
@@ -48,8 +49,10 @@ public class PetController {
         List<PetDTO>  petDTOS = new ArrayList<>();
 
         List<Pet> pets= petService.getAllPets();
+
         for(Pet pet: pets){
             petDTOS.add(convertPetToPetDTO(pet));
+
 
         }
         return petDTOS;
@@ -69,6 +72,16 @@ public class PetController {
     private static PetDTO convertPetToPetDTO(Pet pet){
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(pet, petDTO);
+
+        Customer customer = pet.getCustomer();
+        try {
+            customer.getPets().forEach(petDto -> {
+                petDTO.setOwnerId(customer.getId());
+            });
+
+        }catch (Exception e){
+            System.out.println("customer "+customer.getId() + " doesn't exist");
+        }
         return petDTO;
     }
 
