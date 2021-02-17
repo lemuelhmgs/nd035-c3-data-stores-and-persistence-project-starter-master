@@ -23,13 +23,14 @@ public class PetController {
 
     @Autowired
     PetService petService;
+    @Autowired
+    CustomerService customerService;
 
 
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-      Customer customer = new Customer();
-       customer.setId(petDTO.getOwnerId());
-       petDTO.setCustomer(customer);
+        Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
+        petDTO.setCustomer(customer);
 
         Pet savedPet = petService.savePet(convertPetDTOToPetEntity(petDTO));
         return convertPetToPetDTO(savedPet);

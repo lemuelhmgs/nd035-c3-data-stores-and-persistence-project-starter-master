@@ -1,10 +1,12 @@
 package com.udacity.jdnd.course3.critter.service;
 
 import com.udacity.jdnd.course3.critter.entity.Customer;
+import com.udacity.jdnd.course3.critter.entity.Employee;
 import com.udacity.jdnd.course3.critter.exception.ObjectNotFoundException;
 import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
 
 
+import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.repository.PetRepository;
 import java.util.List;
 import java.util.Optional;
@@ -20,13 +22,15 @@ public class CustomerService {
 
   @Autowired
   CustomerRepository customerRepository;
+  @Autowired
+  EmployeeRepository employeeRepository;
 
   public Customer saveCustomer(Customer customer){
-
-    if(!isCustomerNew(customer.getName())){
-      throw new ObjectNotFoundException("Name already exist in DB");
-    }
-
+//to support unit test
+    //if(!isCustomerNew(customer.getName())){
+    //  throw new ObjectNotFoundException("Name already exist in DB");
+    //}
+//
 
     return  customerRepository.save(customer);
   }
@@ -44,8 +48,12 @@ public class CustomerService {
 
 
   public Customer getCustomerById(Long id){
-  //need to check if this ok or need to return null
+
     return customerRepository.findById(id).orElseThrow(ObjectNotFoundException::new);
+  }
+
+  public List<Employee> findAllById(List<Long> employeeId){
+    return employeeRepository.findAllById(employeeId);
   }
 
   private boolean isNullOrEmpty(String name) {
@@ -67,4 +75,7 @@ public class CustomerService {
     }
   }
 
+  public Employee getEmployeeById(long employeeId) {
+    return employeeRepository.findById(employeeId).orElseThrow(ObjectNotFoundException::new);
+  }
 }

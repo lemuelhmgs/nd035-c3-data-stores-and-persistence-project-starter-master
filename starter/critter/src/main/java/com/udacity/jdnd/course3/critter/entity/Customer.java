@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,7 @@ public class Customer {
 
   private Long id;
 
-  @Column(unique = true)
+
   private String name;
   private String phoneNumber;
   private String notes;
@@ -45,6 +46,9 @@ public class Customer {
   fetch = FetchType.LAZY)
   @JsonBackReference
    private List<Pet> pets;
+
+  @ManyToMany(mappedBy = "customer")
+  private List<Schedule> schedule;
 
 
 

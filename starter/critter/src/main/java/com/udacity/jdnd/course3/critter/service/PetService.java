@@ -80,4 +80,7 @@ public class PetService {
     return false;
   }
 
+  public List<Pet> findAllById(List<Long> petIds) {
+    return petRepository.findAllById(petIds);
+  }
 }

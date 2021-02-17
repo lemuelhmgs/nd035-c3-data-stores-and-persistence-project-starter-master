@@ -11,6 +11,15 @@ import java.util.Set;
  * to the database directly.
  */
 public class ScheduleDTO {
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     private long id;
     private List<Long> employeeIds;
     private List<Long> petIds;
