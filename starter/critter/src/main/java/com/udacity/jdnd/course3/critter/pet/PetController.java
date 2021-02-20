@@ -27,7 +27,7 @@ public class PetController {
     CustomerService customerService;
 
 
-    @PostMapping
+    @PostMapping("/1")
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
         Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
         petDTO.setCustomer(customer);
